@@ -4,6 +4,7 @@ using UnityEngine.Tilemaps;
 public class DarkDay : MonoBehaviour
 {
     public Tilemap[] tilemaps;
+    public SpriteRenderer[] spriteRenderers;
     public bool isDarkTheme = false;
     public float transitionSpeed = 2f;
 
@@ -31,6 +32,7 @@ public class DarkDay : MonoBehaviour
             isTransitioning = true;
             lastThemeState = isDarkTheme;
             rain.SetActive(isDarkTheme);
+
             
         }
 
@@ -42,6 +44,10 @@ public class DarkDay : MonoBehaviour
                 tilemap.color = Color.Lerp(tilemap.color, targetColor, Time.deltaTime * transitionSpeed);
                 if (Vector4.Distance(tilemap.color, targetColor) > 0.01f)
                     finished = false;
+            }
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.color = Color.Lerp(spriteRenderer.color, targetColor, Time.deltaTime * transitionSpeed);
             }
             if (finished)
             {
